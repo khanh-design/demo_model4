@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="/layout :: head">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h3>Customers</h3>
+<p>
+    <a th:href="@{/products/create}">
+        Add new customer
+    </a>
+</p>
+<p>
+    <a th:href="@{/product_type}">
+        Provinces
+    </a>
+</p>
+<table id="customers">
+    <thead>
+    <tr>
+        <th>STT</th>
+        <th>chon</th>
+        <th>Ten san pham</th>
+        <th>Gia bat dau</th>
+<!--        <th>Loai san pham</th>-->
+        <th>Tinh trang</th>
+        <th>Edit</th>
+        <th>Delete</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="row, rowState : ${products}">
+        <td th:text="${rowState.count}"></td>
+        <td><input type="checkbox"></td>
+        <td th:text="${row.name}"></td>
+        <td th:text="${row.price}"></td>
+        <td th:text="${row.status}"></td>
+        <td><a th:href="@{/products/edit/{id}(id=${row.getId()})}">edit</a></td>
+        <td><a th:href="@{/products/delete/{id}(id=${row.getId()})}">delete</a></td>
+    </tr>
+    </tbody>
+</table>
+<a class="btn btn-primary" th:if="${products.hasPrevious()}"
+   th:href="@{/products(page=${products.number - 1})}">Previous</a>
+<span th:text="${products.number + 1}"></span> | <span th:text="${products.totalPages}"></span>
+<a class="btn btn-primary" th:if="${products.hasNext()}"
+   th:href="@{/products(page=${products.number + 1})}">Next</a>
+<footer th:replace="/layout :: footer"></footer>
+</body>
+</html>
